@@ -475,6 +475,41 @@
             resetLabels([layer_DESAKECAMATANTEBAS_1]);
         });
 
+
+            var map = L.map('map').setView([-2.548926, 118.0148634], 5);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);
+
+var drawnItems = new L.FeatureGroup().addTo(map);
+
+var drawControl = new L.Control.Draw({
+    draw: {
+        polyline: false,
+        polygon: false,
+        circle: false,
+        rectangle: false,
+        marker: true
+    },
+    edit: {
+        featureGroup: drawnItems
+    }
+}).addTo(map);
+
+map.on('draw:created', function(event) {
+    var layer = event.layer;
+    drawnItems.addLayer(layer);
+    // Simpan ke server atau file
+});
+
+map.on('draw:edited', function(event) {
+    var layers = event.layers;
+    layers.eachLayer(function(layer) {
+        // Update koordinat ke server atau file
+    });
+});
+
         </script>
     </body>
 </html>
